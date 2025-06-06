@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.spvamzapp.character.CharacterEntry
 import com.example.spvamzapp.character.ItemRepository
 import com.example.spvamzapp.item.Item
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -15,15 +16,11 @@ import kotlinx.coroutines.launch
 class EditViewModel(private val repository: ItemRepository) : ViewModel() {
 
     var selectedChar: CharacterEntry? = null
-    val editUiState: StateFlow<EditUiState> =
+    var flowList: Flow<List<Item>> =
         repository.allItems
             .map {
-                EditUiState(it.filter { it.charId == selectedChar?.id })
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = EditUiState()
-        )
+                (it.filter { it.charId == selectedChar?.id })
+        }
 
     fun addItem(item: Item) {
         viewModelScope.launch {

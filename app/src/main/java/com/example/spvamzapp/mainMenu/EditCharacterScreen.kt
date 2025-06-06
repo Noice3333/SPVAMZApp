@@ -31,8 +31,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.State
+import androidx.compose.runtime.remember
 import com.example.spvamzapp.character.CharacterEntry
 import com.example.spvamzapp.item.Item
+import com.example.spvamzapp.item.ItemCard
+import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +45,6 @@ fun EditCharacterScreen(
     edcm: EditViewModel,
     onBackButtonClicked: () -> Unit
 ) {
-    val itemUiState by edcm.editUiState.collectAsState()
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -63,18 +66,16 @@ fun EditCharacterScreen(
         }
     ) { innerPadding -> EditCharacter(Modifier.padding(innerPadding), mmvm,
         edcm,
-        itemUiState.itemList,
         {onBackButtonClicked()}) }
 }
 
 @Composable
 fun EditCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                   edcm: EditViewModel,
-                  list: List<Item>,
                   onCancelButtonClick: () -> Unit) {
     var characterName by rememberSaveable { mutableStateOf(edcm.selectedChar?.name) }
     val innerModifier = Modifier.padding(4.dp)
-
+    val myFlow = edcm.flowList.collectAsState(listOf())
     Box(modifier = modifier.fillMaxSize()) {
         Column(innerModifier) {
             TextField(
@@ -96,10 +97,8 @@ fun EditCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                 }) { Text(text = "Add blank item")}
             }
             LazyColumn {
-                items(list.size) { item ->
-                    list[item].name = "Wuju"
-                    edcm.editItem(list[item])
-                    Text(text = list[item].charId.toString())
+                items(myFlow.value.size) { item ->
+                    ItemCard(Modifier.padding(4.dp), edcm, myFlow.value[item])
                 }
             }
         }
