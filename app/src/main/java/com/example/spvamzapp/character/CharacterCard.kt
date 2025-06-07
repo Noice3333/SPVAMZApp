@@ -22,8 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.spvamzapp.R
-import com.example.spvamzapp.mainMenu.EditViewModel
-import com.example.spvamzapp.mainMenu.MainMenuViewModel
+import com.example.spvamzapp.viewmodels.EditViewModel
+import com.example.spvamzapp.viewmodels.MainMenuViewModel
 
 @Composable
 fun CharacterCard(modifier: Modifier = Modifier,

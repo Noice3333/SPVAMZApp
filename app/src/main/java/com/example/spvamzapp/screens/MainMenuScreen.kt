@@ -1,5 +1,6 @@
-package com.example.spvamzapp.mainMenu
+package com.example.spvamzapp.screens
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -13,6 +14,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,11 +27,16 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import com.example.spvamzapp.character.CharacterCard
 import com.example.spvamzapp.character.CharacterEntry
+import com.example.spvamzapp.viewmodels.EditViewModel
+import com.example.spvamzapp.viewmodels.MainMenuViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,9 +45,11 @@ fun MainMenuScreen(
     mmvm: MainMenuViewModel,
     edcm: EditViewModel,
     onEditButtonClicked: () -> Unit,
-    onCreateButtonClicked: () -> Unit
+    onCreateButtonClicked: () -> Unit,
+    onMenuButtonClicked: () -> Unit
 ) {
     val state by mmvm.mainMenuUiState.collectAsState()
+    var menuExpanded by rememberSaveable { mutableStateOf(false) }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -50,11 +60,19 @@ fun MainMenuScreen(
                 title = { Text("Main menu") },
                 scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
                 navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Filled.Menu,
-                            contentDescription = "Settings"
-                        )
+                    Box() {
+                        IconButton(onClick = {menuExpanded = true}) {
+                            Icon(imageVector = Icons.Filled.Menu, contentDescription = "Theme menu")
+                        }
+                        DropdownMenu(expanded = menuExpanded,
+                            onDismissRequest = {menuExpanded = false}) {
+                            DropdownMenuItem(text = {Text("Theme: Blue")},
+                                onClick = {mmvm.changeTheme(1)})
+                            DropdownMenuItem(text = {Text("Theme: Red")},
+                                onClick = {mmvm.changeTheme(2)})
+                            DropdownMenuItem(text = {Text("Theme: Green")},
+                                onClick = {mmvm.changeTheme(3)})
+                        }
                     }
                 },
                 actions = {
@@ -75,9 +93,10 @@ fun MainMenuScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainMenu(modifier: Modifier = Modifier,list: List<CharacterEntry>,
+fun MainMenu(modifier: Modifier = Modifier, list: List<CharacterEntry>,
              onEditButtonClicked: () -> Unit, edcm: EditViewModel,
-             mainMenuViewModel: MainMenuViewModel) {
+             mainMenuViewModel: MainMenuViewModel
+) {
     val layoutDirection = LocalLayoutDirection.current
     Surface(modifier = modifier
         .fillMaxSize()

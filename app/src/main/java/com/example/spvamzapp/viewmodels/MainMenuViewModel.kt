@@ -1,17 +1,19 @@
-package com.example.spvamzapp.mainMenu
+package com.example.spvamzapp.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.spvamzapp.character.CharacterEntry
 import com.example.spvamzapp.character.CharacterRepository
+import com.example.spvamzapp.mainMenu.UserPrefRepo
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class MainMenuViewModel(private val repository: CharacterRepository) : ViewModel() {
+class MainMenuViewModel(private val repository: CharacterRepository,
+    private val userPrefRepo: UserPrefRepo) : ViewModel() {
 
     val mainMenuUiState: StateFlow<MainScreenUiState> =
         repository.allCharacters.map {
@@ -21,6 +23,12 @@ class MainMenuViewModel(private val repository: CharacterRepository) : ViewModel
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = MainScreenUiState()
         )
+
+    fun changeTheme(choice: Int) {
+        viewModelScope.launch {
+            userPrefRepo.saveThemePreference(choice)
+        }
+    }
 
     fun addCharacter(characterEntry: CharacterEntry) {
         viewModelScope.launch {
@@ -39,12 +47,14 @@ class MainMenuViewModel(private val repository: CharacterRepository) : ViewModel
             repository.delete(characterEntry)
         }
     }
+
 }
 
 @Suppress("UNCHECKED_CAST")
-class MainMenuViewModelFactory(private val characterRepository: CharacterRepository) : ViewModelProvider.Factory {
+class MainMenuViewModelFactory(private val characterRepository: CharacterRepository,
+    private val userPrefRepo: UserPrefRepo) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MainMenuViewModel(characterRepository) as T
+        return MainMenuViewModel(characterRepository, userPrefRepo) as T
     }
 }
 

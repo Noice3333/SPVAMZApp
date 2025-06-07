@@ -19,7 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.spvamzapp.mainMenu.EditViewModel
+import com.example.spvamzapp.viewmodels.EditViewModel
 
 @Composable
 fun ItemCard(modifier: Modifier = Modifier,
@@ -31,7 +31,7 @@ fun ItemCard(modifier: Modifier = Modifier,
     var name by rememberSaveable { mutableStateOf(item.name) }
     var description by rememberSaveable { mutableStateOf(item.description) }
     Card(modifier) {
-        Column(Modifier.heightIn(150.dp, 300.dp)) {
+        Column(Modifier.heightIn(50.dp, 300.dp)) {
             Row(modifier = Modifier.weight(1f,true)) {
                 TextField(
                     modifier = Modifier.weight(0.9f).padding(start = 16.dp),
