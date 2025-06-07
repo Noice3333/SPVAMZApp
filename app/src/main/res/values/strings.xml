@@ -1,7 +1,12 @@
 <resources>
-    <string name="app_name">SPVAMZApp</string>,
+    <string name="app_name">TTRPG Character Sheet</string>,
     <string name="username">Samuel Panák</string>
     <string name="roll">Roll</string>
     <string name="what_you_entered">What you entered:</string>
     <string name="edit">Edit</string>
+    <string-array name="characterRaces">
+        <item>Aaracokra</item>
+        <item>Aasimar</item>
+        <item>Battleforged</item>
+    </string-array>
 </resources>

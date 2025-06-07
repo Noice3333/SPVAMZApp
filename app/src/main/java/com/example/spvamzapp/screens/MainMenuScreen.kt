@@ -45,8 +45,7 @@ fun MainMenuScreen(
     mmvm: MainMenuViewModel,
     edcm: EditViewModel,
     onEditButtonClicked: () -> Unit,
-    onCreateButtonClicked: () -> Unit,
-    onMenuButtonClicked: () -> Unit
+    onCreateButtonClicked: () -> Unit
 ) {
     val state by mmvm.mainMenuUiState.collectAsState()
     var menuExpanded by rememberSaveable { mutableStateOf(false) }

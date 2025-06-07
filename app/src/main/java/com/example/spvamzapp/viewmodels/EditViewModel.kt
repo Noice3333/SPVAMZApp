@@ -65,6 +65,19 @@ class EditViewModel(
             spellRepository.delete(spell)
         }
     }
+
+    fun onRemoveCharacter(id: Int) {
+        viewModelScope.launch {
+            itemRepository.allItems.map {
+                (it.filter { it.charId == id })
+            }.collect { it.forEach { itemRepository.delete(it) } }
+        }
+        viewModelScope.launch {
+            spellRepository.allSpells.map {
+                (it.filter { it.charId == id })
+            }.collect { it.forEach { spellRepository.delete(it) } }
+        }
+    }
 }
 
 @Suppress("UNCHECKED_CAST")

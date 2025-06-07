@@ -11,5 +11,6 @@ data class CharacterEntry(
     var name: String = "",
     var charClass: String = "",
     var charRace: String = "",
+    var charAlignment: String = "",
     @DrawableRes var pictureID: Int? = R.drawable.swordsmanmale
 )

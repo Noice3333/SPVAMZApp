@@ -34,7 +34,7 @@ fun CharacterCard(modifier: Modifier = Modifier,
 ) {
     Card(modifier = modifier.heightIn(50.dp, 100.dp)) {
         Box {
-            Image(painter = painterResource(character.pictureID ?: R.drawable.swordsmanmale),
+            Image(painter = painterResource(R.drawable.swordsmanmale),
                 contentDescription = character.name,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -61,9 +61,16 @@ fun CharacterCard(modifier: Modifier = Modifier,
                     { Text(text = stringResource(R.string.edit)) }
                 }
                 Text(
+                    text = character.charRace,
+                    modifier = Modifier.padding(start = 16.dp),
+                    style = MaterialTheme.typography.bodySmall,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
+                )
+                Text(
                     text = character.charClass,
                     modifier = Modifier.padding(start = 16.dp),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodySmall,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )

@@ -13,8 +13,8 @@ import com.example.spvamzapp.character.CharacterDatabase
 import com.example.spvamzapp.character.CharacterRepository
 import com.example.spvamzapp.character.ItemDatabase
 import com.example.spvamzapp.character.ItemRepository
+import com.example.spvamzapp.screens.CharacterSheetScreen
 import com.example.spvamzapp.screens.CreateCharacterScreen
-import com.example.spvamzapp.screens.EditCharacterScreen
 import com.example.spvamzapp.screens.MainMenuScreen
 import com.example.spvamzapp.spell.SpellDatabase
 import com.example.spvamzapp.spell.SpellRepository
@@ -46,37 +46,32 @@ class MainActivity : ComponentActivity() {
             SpellRepository(SpellDatabase.getDatabase(applicationContext).spellDao())
         val editViewModel: EditViewModel by viewModels { EditViewModelFactory(itemRepo, spellRepo) }
         setContent {
-            val theme = userPrefRepo.chosenTheme.collectAsState(0)
-            when (theme.value) {
-                0 -> {}
-                else ->
-                AppTheme(theme.value) {
-                    val navController = rememberNavController()
-                    NavHost(
-                        navController = navController,
-                        startDestination = ScreenNames.MainMenuScreen.name
-                    ) {
-                        composable(ScreenNames.MainMenuScreen.name) {
-                            MainMenuScreen(
-                                viewModel, editViewModel,
-                                { navController.navigate(ScreenNames.EditCharacterScreen.name) },
-                                { navController.navigate(ScreenNames.CreateCharacterScreen.name) })
-                            {
-                            }
+            val theme = userPrefRepo.chosenTheme.collectAsState(1)
+            AppTheme(theme.value) {
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = ScreenNames.MainMenuScreen.name
+                ) {
+                    composable(ScreenNames.MainMenuScreen.name) {
+                        MainMenuScreen(
+                            viewModel, editViewModel,
+                            { navController.navigate(ScreenNames.EditCharacterScreen.name) },
+                            { navController.navigate(ScreenNames.CreateCharacterScreen.name) })
+                    }
+                    composable(ScreenNames.CreateCharacterScreen.name) {
+                        CreateCharacterScreen(viewModel) {
+                            navController.navigate(ScreenNames.MainMenuScreen.name)
                         }
-                        composable(ScreenNames.CreateCharacterScreen.name) {
-                            CreateCharacterScreen(viewModel) {
-                                navController.navigate(ScreenNames.MainMenuScreen.name)
-                            }
-                        }
-                        composable(ScreenNames.EditCharacterScreen.name) {
-                            EditCharacterScreen(viewModel, editViewModel) {
-                                navController.navigate(ScreenNames.MainMenuScreen.name)
-                            }
+                    }
+                    composable(ScreenNames.EditCharacterScreen.name) {
+                        CharacterSheetScreen(viewModel, editViewModel) {
+                            navController.navigate(ScreenNames.MainMenuScreen.name)
                         }
                     }
                 }
             }
+
         }
     }
 }

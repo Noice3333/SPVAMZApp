@@ -8,13 +8,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
@@ -23,8 +27,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.unit.dp
+import com.example.spvamzapp.R
 import com.example.spvamzapp.character.CharacterEntry
 import com.example.spvamzapp.viewmodels.MainMenuViewModel
 
@@ -47,7 +54,7 @@ fun CreateCharacterScreen(
                     IconButton(onClick = {onBackButtonClicked()}) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Settings"
+                            contentDescription = "Back to main menu"
                         )
                     }
                 }
@@ -60,20 +67,121 @@ fun CreateCharacterScreen(
 fun CreateCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                     onCancelButtonClick: () -> Unit) {
     var characterName by rememberSaveable { mutableStateOf("") }
-    val innerModifier = Modifier.padding(4.dp)
+    var characterRace by rememberSaveable { mutableStateOf("") }
+    var characterRaceSwitch by rememberSaveable { mutableStateOf(false) }
+    var characterRaceMenu by rememberSaveable { mutableStateOf(false) }
+    var characterClass by rememberSaveable { mutableStateOf("") }
+    var characterClassSwitch by rememberSaveable { mutableStateOf(false) }
+    var characterClassMenu by rememberSaveable { mutableStateOf(false) }
+    var characterAlignment by rememberSaveable { mutableStateOf("") }
+    var characterAlignmentSwitch by rememberSaveable { mutableStateOf(false) }
+    var characterAlignmentMenu by rememberSaveable { mutableStateOf(false) }
+    val innerModifier = Modifier.padding(8.dp)
     Box(modifier = modifier) {
         Column(innerModifier) {
             TextField(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(8.dp),
                 label = { Text(text = "Character name:") },
                 value = characterName,
                 onValueChange = { characterName = it }
             )
             Row(innerModifier) {
-                Button(onClick = {onCancelButtonClick()}, Modifier) { Text(text = "Cancel") }
+                Box(Modifier.weight(6f)) {
+                    TextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = characterRace,
+                        onValueChange = { characterRace = it },
+                        enabled = characterRaceSwitch,
+                        label = { Text("Race...") },
+                        singleLine = true
+                    )
+                    IconButton(modifier = Modifier.align(Alignment.CenterEnd),
+                        onClick = {characterRaceMenu = true }) {
+                        Icon(imageVector = Icons.Filled.KeyboardArrowDown,
+                            contentDescription = "Expand race menu")
+                    }
+                    DropdownMenu(expanded = characterRaceMenu,
+                        onDismissRequest = {characterRaceMenu = false}) {
+                        stringArrayResource(R.array.characterRaces).forEach {
+                            DropdownMenuItem(text = {Text(it)},
+                                onClick = {characterRace = it})
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                Text("Custom", Modifier.align(Alignment.CenterVertically)
+                    .padding(8.dp))
+                Switch(modifier = Modifier.align(Alignment.CenterVertically),
+                    checked = characterRaceSwitch,
+                    onCheckedChange = { characterRaceSwitch = it })
+            }
+            Row(innerModifier) {
+                Box(Modifier.weight(6f)) {
+                    TextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = characterClass,
+                        onValueChange = { characterClass = it },
+                        enabled = characterClassSwitch,
+                        label = { Text("Class...") },
+                        singleLine = true
+                    )
+                    IconButton(modifier = Modifier.align(Alignment.CenterEnd),
+                        onClick = { characterClassMenu = true }) {
+                        Icon(imageVector = Icons.Filled.KeyboardArrowDown,
+                            contentDescription = "Expand class menu")
+                    }
+                    DropdownMenu(expanded = characterClassMenu,
+                        onDismissRequest = {characterClassMenu = false}) {
+                        stringArrayResource(R.array.characterRaces).forEach {
+                            DropdownMenuItem(text = {Text(it)},
+                                onClick = {characterClass = it})
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                Text("Custom", Modifier.align(Alignment.CenterVertically)
+                    .padding(8.dp))
+                Switch(modifier = Modifier.align(Alignment.CenterVertically),
+                    checked = characterClassSwitch,
+                    onCheckedChange = { characterClassSwitch = it })
+            }
+            Row(innerModifier) {
+                Box(Modifier.weight(6f)) {
+                    TextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = characterAlignment,
+                        onValueChange = { characterAlignment = it },
+                        enabled = characterAlignmentSwitch,
+                        label = { Text("Alignment...") },
+                        singleLine = true
+                    )
+                    IconButton(modifier = Modifier.align(Alignment.CenterEnd),
+                        onClick = { characterAlignmentMenu = true}) {
+                        Icon(imageVector = Icons.Filled.KeyboardArrowDown,
+                            contentDescription = "Expand alignment menu")
+                    }
+                    DropdownMenu(expanded = characterAlignmentMenu,
+                        onDismissRequest = {characterAlignmentMenu = false}) {
+                        stringArrayResource(R.array.characterRaces).forEach {
+                            DropdownMenuItem(text = {Text(it)},
+                                onClick = {characterAlignment = it})
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                Text("Custom", Modifier.align(Alignment.CenterVertically)
+                    .padding(8.dp))
+                Switch(modifier = Modifier.align(Alignment.CenterVertically),
+                    checked = characterAlignmentSwitch,
+                    onCheckedChange = { characterAlignmentSwitch = it })
+            }
+            Row(innerModifier) {
                 Spacer(Modifier.weight(4f))
                 Button(onClick = {
-                    mmvm.addCharacter(CharacterEntry(name = characterName))
+                    mmvm.addCharacter(CharacterEntry(name = characterName,
+                        charRace = characterRace,
+                        charClass = characterClass,
+                        charAlignment = characterAlignment))
                     onCancelButtonClick()
                 }) { Text(text = "Create") }
             }

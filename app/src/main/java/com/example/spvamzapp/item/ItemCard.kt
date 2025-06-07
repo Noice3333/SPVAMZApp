@@ -2,6 +2,7 @@ package com.example.spvamzapp.item
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -30,15 +31,16 @@ fun ItemCard(modifier: Modifier = Modifier,
     var textFieldEditable by rememberSaveable { mutableIntStateOf(0) }
     var name by rememberSaveable { mutableStateOf(item.name) }
     var description by rememberSaveable { mutableStateOf(item.description) }
-    Card(modifier) {
-        Column(Modifier.heightIn(50.dp, 300.dp)) {
-            Row(modifier = Modifier.weight(1f,true)) {
+    Card(modifier.fillMaxWidth().heightIn(100.dp)) {
+        Column() {
+            Row() {
                 TextField(
                     modifier = Modifier.weight(0.9f).padding(start = 16.dp),
                     enabled = textFieldEditable == 1,
                     value = name,
                     onValueChange = { name = it },
-                    textStyle = MaterialTheme.typography.headlineSmall
+                    textStyle = MaterialTheme.typography.headlineSmall,
+                    singleLine = true
                 )
                 IconButton(onClick = {
                     if (textFieldEditable == 1) {
@@ -56,7 +58,7 @@ fun ItemCard(modifier: Modifier = Modifier,
                         contentDescription = "Edit item")
                 }
             }
-            Row(modifier = Modifier.weight(3f,true)) {
+            Row() {
                 TextField(
                     modifier = Modifier.weight(0.9f).padding(start = 16.dp),
                     enabled = textFieldEditable == 2,
