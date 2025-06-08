@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.spvamzapp.R
 import com.example.spvamzapp.character.CharacterEntry
@@ -48,13 +49,13 @@ fun CreateCharacterScreen(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary
                 ),
-                title = { Text("Create character") },
+                title = { Text(stringResource(R.string.create_character_screen_title)) },
                 scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
                 navigationIcon = {
                     IconButton(onClick = {onBackButtonClicked()}) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back to main menu"
+                            contentDescription = stringResource(R.string.back_button_desc)
                         )
                     }
                 }
@@ -80,8 +81,10 @@ fun CreateCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
     Box(modifier = modifier) {
         Column(innerModifier) {
             TextField(
-                modifier = Modifier.fillMaxWidth().padding(8.dp),
-                label = { Text(text = "Character name:") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                label = { Text(text = stringResource(R.string.character_name_dummy)) },
                 value = characterName,
                 onValueChange = { characterName = it }
             )
@@ -92,24 +95,27 @@ fun CreateCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                         value = characterRace,
                         onValueChange = { characterRace = it },
                         enabled = characterRaceSwitch,
-                        label = { Text("Race...") },
+                        label = { Text(stringResource(R.string.race_selection)) },
                         singleLine = true
                     )
                     IconButton(modifier = Modifier.align(Alignment.CenterEnd),
-                        onClick = {characterRaceMenu = true }) {
+                        onClick = { characterRaceMenu = true }) {
                         Icon(imageVector = Icons.Filled.KeyboardArrowDown,
-                            contentDescription = "Expand race menu")
+                            contentDescription = stringResource(R.string.expand_race_menu_button_desc)
+                        )
                     }
                     DropdownMenu(expanded = characterRaceMenu,
-                        onDismissRequest = {characterRaceMenu = false}) {
+                        onDismissRequest = { characterRaceMenu = false }) {
                         stringArrayResource(R.array.characterRaces).forEach {
                             DropdownMenuItem(text = {Text(it)},
-                                onClick = {characterRace = it})
+                                onClick = {characterRace = it
+                                characterRaceMenu = false})
                         }
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                Text("Custom", Modifier.align(Alignment.CenterVertically)
+                Text("Custom", Modifier
+                    .align(Alignment.CenterVertically)
                     .padding(8.dp))
                 Switch(modifier = Modifier.align(Alignment.CenterVertically),
                     checked = characterRaceSwitch,
@@ -122,24 +128,27 @@ fun CreateCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                         value = characterClass,
                         onValueChange = { characterClass = it },
                         enabled = characterClassSwitch,
-                        label = { Text("Class...") },
+                        label = { Text(stringResource(R.string.class_selection)) },
                         singleLine = true
                     )
                     IconButton(modifier = Modifier.align(Alignment.CenterEnd),
                         onClick = { characterClassMenu = true }) {
                         Icon(imageVector = Icons.Filled.KeyboardArrowDown,
-                            contentDescription = "Expand class menu")
+                            contentDescription = stringResource(R.string.expand_class_menu_desc)
+                        )
                     }
                     DropdownMenu(expanded = characterClassMenu,
                         onDismissRequest = {characterClassMenu = false}) {
-                        stringArrayResource(R.array.characterRaces).forEach {
+                        stringArrayResource(R.array.characterClasses).forEach {
                             DropdownMenuItem(text = {Text(it)},
-                                onClick = {characterClass = it})
+                                onClick = {characterClass = it
+                                characterClassMenu = false})
                         }
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                Text("Custom", Modifier.align(Alignment.CenterVertically)
+                Text("Custom", Modifier
+                    .align(Alignment.CenterVertically)
                     .padding(8.dp))
                 Switch(modifier = Modifier.align(Alignment.CenterVertically),
                     checked = characterClassSwitch,
@@ -152,24 +161,27 @@ fun CreateCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                         value = characterAlignment,
                         onValueChange = { characterAlignment = it },
                         enabled = characterAlignmentSwitch,
-                        label = { Text("Alignment...") },
+                        label = { Text(stringResource(R.string.alignment_selection)) },
                         singleLine = true
                     )
                     IconButton(modifier = Modifier.align(Alignment.CenterEnd),
                         onClick = { characterAlignmentMenu = true}) {
                         Icon(imageVector = Icons.Filled.KeyboardArrowDown,
-                            contentDescription = "Expand alignment menu")
+                            contentDescription = stringResource(R.string.expand_alignment_menu_desc)
+                        )
                     }
                     DropdownMenu(expanded = characterAlignmentMenu,
                         onDismissRequest = {characterAlignmentMenu = false}) {
-                        stringArrayResource(R.array.characterRaces).forEach {
+                        stringArrayResource(R.array.characterAlignments).forEach {
                             DropdownMenuItem(text = {Text(it)},
-                                onClick = {characterAlignment = it})
+                                onClick = {characterAlignment = it
+                                characterAlignmentMenu = false})
                         }
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                Text("Custom", Modifier.align(Alignment.CenterVertically)
+                Text("Custom", Modifier
+                    .align(Alignment.CenterVertically)
                     .padding(8.dp))
                 Switch(modifier = Modifier.align(Alignment.CenterVertically),
                     checked = characterAlignmentSwitch,
@@ -183,7 +195,7 @@ fun CreateCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                         charClass = characterClass,
                         charAlignment = characterAlignment))
                     onCancelButtonClick()
-                }) { Text(text = "Create") }
+                }) { Text(text = stringResource(R.string.create_button_text)) }
             }
         }
     }

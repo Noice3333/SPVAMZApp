@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.spvamzapp.R
 import com.example.spvamzapp.item.Item
 import com.example.spvamzapp.item.ItemDao
 
@@ -16,7 +17,8 @@ abstract class ItemDatabase: RoomDatabase() {
         private var Instance: ItemDatabase? = null
         fun getDatabase(context: Context): ItemDatabase {
             return Instance ?: synchronized(this) {
-                Room.databaseBuilder(context, ItemDatabase::class.java, "item_database")
+                Room.databaseBuilder(context, ItemDatabase::class.java,
+                    context.getString(R.string.item_database_name))
                     .fallbackToDestructiveMigration(true).build().also { Instance = it }
             }
         }

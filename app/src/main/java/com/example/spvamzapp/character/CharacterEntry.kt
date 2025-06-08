@@ -1,10 +1,9 @@
 package com.example.spvamzapp.character
 
-import androidx.annotation.DrawableRes
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.spvamzapp.R
 
+//stringResource is unusable outside of a composable
 @Entity(tableName = "characterEntries")
 data class CharacterEntry(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
@@ -12,5 +11,5 @@ data class CharacterEntry(
     var charClass: String = "",
     var charRace: String = "",
     var charAlignment: String = "",
-    @DrawableRes var pictureID: Int? = R.drawable.swordsmanmale
+    var pictureURI: String? = null
 )

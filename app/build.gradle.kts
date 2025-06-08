@@ -46,6 +46,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.9.1")
     ksp("androidx.room:room-compiler:2.7.1")
     implementation("androidx.datastore:datastore-preferences:1.1.7")
+    implementation("io.coil-kt.coil3:coil-compose:3.2.0")
     implementation(libs.androidx.room.runtime.android)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

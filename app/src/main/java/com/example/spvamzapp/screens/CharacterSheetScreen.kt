@@ -1,9 +1,15 @@
 package com.example.spvamzapp.screens
 
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,8 +21,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
@@ -44,13 +51,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.example.spvamzapp.R
 import com.example.spvamzapp.character.CharacterEntry
+import com.example.spvamzapp.character.CharacterImage
 import com.example.spvamzapp.item.Item
 import com.example.spvamzapp.item.ItemCard
 import com.example.spvamzapp.spell.Spell
@@ -74,13 +85,13 @@ fun CharacterSheetScreen(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary
                 ),
-                title = { Text("Character sheet") },
+                title = { Text(stringResource(R.string.character_sheet_screen_title)) },
                 scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
                 navigationIcon = {
                     IconButton(onClick = {onBackButtonClicked()}) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Return to main menu"
+                            contentDescription = stringResource(R.string.back_button_desc)
                         )
                     }
                 },
@@ -89,7 +100,7 @@ fun CharacterSheetScreen(
                         IconButton(onClick = { editing = !editing }) {
                             Icon(
                                 imageVector = Icons.Filled.Create,
-                                contentDescription = "Return to main menu"
+                                contentDescription = stringResource(R.string.toggle_editing_button_desc)
                             )
                         }
                     }
@@ -107,7 +118,8 @@ fun CharacterSheetScreen(
                     },
                     icon = {
                         Icon(imageVector = Icons.Filled.Person,
-                            contentDescription = "Character details")
+                            contentDescription = stringResource(R.string.character_details_navbar_desc)
+                        )
                     }
                 )
                 NavigationBarItem(
@@ -119,7 +131,8 @@ fun CharacterSheetScreen(
                     },
                     icon = {
                         Icon(imageVector = Icons.Filled.MailOutline,
-                            contentDescription = "Item details")
+                            contentDescription = stringResource(R.string.item_details_navbar_desc)
+                        )
                     }
                 )
                 NavigationBarItem(
@@ -131,13 +144,15 @@ fun CharacterSheetScreen(
                     },
                     icon = {
                         Icon(imageVector = Icons.Filled.Star,
-                            contentDescription = "Spell details")
+                            contentDescription = stringResource(R.string.spell_details_navbar_desc)
+                        )
                     }
                 )
             }
         }
     ) { innerPadding ->
-        AnimatedContent(targetState = selectedNavBarIcon,
+        AnimatedContent(
+            targetState = selectedNavBarIcon,
         ) { targetState ->
             when (targetState) {
                 0 -> {
@@ -174,6 +189,7 @@ fun EditCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                   edcm: EditViewModel,
                   onCancelButtonClick: () -> Unit,
                   editing: Boolean) {
+    val innerModifier = Modifier.padding(4.dp)
     var characterName by rememberSaveable {
         mutableStateOf(edcm.selectedChar?.name) }
     var characterRace by rememberSaveable {
@@ -182,96 +198,120 @@ fun EditCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
         mutableStateOf(edcm.selectedChar?.charClass) }
     var characterAlignment by rememberSaveable {
         mutableStateOf(edcm.selectedChar?.charAlignment) }
-    val innerModifier = Modifier.padding(4.dp)
     var showAlertDialog by rememberSaveable { mutableStateOf(false) }
-    var characterImage by rememberSaveable { mutableIntStateOf(
-        edcm.selectedChar?.pictureID ?: R.drawable.swordsmanmale) }
+    var image by rememberSaveable { mutableStateOf<Uri?>(
+        edcm.selectedChar?.pictureURI?.toUri()) }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { result ->
+        image = result
+        edcm.selectedChar?.pictureURI = image.toString()
+        mmvm.editCharacter(edcm.selectedChar ?: CharacterEntry())
+    }
+    val launcher2 = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+    }
+    val context = LocalContext.current
 
     if (showAlertDialog) {
-        RemoveCharacterDialog({showAlertDialog = false},
+        RemovalDialog({showAlertDialog = false},
             {
                 var id: Int = edcm.selectedChar?.id ?: 0
                 mmvm.removeCharacter(edcm.selectedChar ?: CharacterEntry())
                 edcm.onRemoveCharacter(id)
                 onCancelButtonClick()
             },
-            "Are you sure you want to delete this character?",
-            "Delete",
-            Icons.Filled.Star
+            stringResource(R.string.delete_dialog_title),
+            stringResource(R.string.character_deletion_prompt),
+            Icons.Filled.Delete
             )
     }
     Box(modifier = modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(characterImage),
-            modifier = Modifier.alpha(0.3f).fillMaxSize(),
-            contentDescription = "Character image"
-        )
+        CharacterImage(edcm.selectedChar ?: CharacterEntry(), 0.3f)
         Column(innerModifier) {
-            Box(Modifier.heightIn(84.dp).padding(4.dp)
+            Box(Modifier
+                .heightIn(84.dp)
+                .padding(4.dp)
                 .fillMaxWidth()) {
                 Text(
                     modifier = Modifier.align(Alignment.TopStart),
-                    text = "Name:"
+                    text = stringResource(R.string.name_colon)
                 )
                 OutlinedTextField(
-                    enabled = editing,
+                    readOnly = !editing,
                     modifier = Modifier.align(Alignment.BottomEnd),
                     value = characterName ?: "",
                     onValueChange = { characterName = it },
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next
                     ),
-                    singleLine = true
+                    textStyle = MaterialTheme.typography
+                        .bodyMedium.copy(textAlign = TextAlign.End),
+                    singleLine = true,
                 )
             }
-            Box(Modifier.heightIn(84.dp).padding(4.dp)
+            Box(Modifier
+                .heightIn(84.dp)
+                .padding(4.dp)
                 .fillMaxWidth()) {
                 Text(
                     modifier = Modifier.align(Alignment.TopStart),
-                    text = "Race:"
+                    text = stringResource(R.string.race_colon)
                 )
                 OutlinedTextField(
-                    enabled = editing,
+                    readOnly = !editing,
                     modifier = Modifier.align(Alignment.BottomEnd),
                     value = characterRace ?: "",
                     onValueChange = { characterRace = it },
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next
                     ),
+                    textStyle = MaterialTheme.typography
+                        .bodyMedium.copy(textAlign = TextAlign.End),
                     singleLine = true
                 )
             }
-            Box(Modifier.heightIn(84.dp).padding(4.dp)
+            Box(Modifier
+                .heightIn(84.dp)
+                .padding(4.dp)
                 .fillMaxWidth()) {
                 Text(
                     modifier = Modifier.align(Alignment.TopStart),
-                    text = "Class:"
+                    text = stringResource(R.string.class_colon)
                 )
                 OutlinedTextField(
-                    enabled = editing,
+                    readOnly = !editing,
                     modifier = Modifier.align(Alignment.BottomEnd),
                     value = characterClass ?: "",
                     onValueChange = { characterClass = it },
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next
                     ),
+                    textStyle = MaterialTheme.typography
+                        .bodyMedium.copy(textAlign = TextAlign.End),
                     singleLine = true
                 )
             }
-            Box(Modifier.heightIn(84.dp).padding(4.dp)
+            Box(Modifier
+                .heightIn(84.dp)
+                .padding(4.dp)
                 .fillMaxWidth()) {
                 Text(
                     modifier = Modifier.align(Alignment.TopStart),
-                    text = "Alignment:"
+                    text = stringResource(R.string.alignment_colon)
                 )
                 OutlinedTextField(
-                    enabled = editing,
+                    readOnly = !editing,
                     modifier = Modifier.align(Alignment.BottomEnd),
                     value = characterAlignment ?: "",
                     onValueChange = { characterAlignment = it },
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next
                     ),
+                    textStyle = MaterialTheme.typography
+                        .bodyMedium.copy(textAlign = TextAlign.End),
                     singleLine = true
                 )
             }
@@ -284,7 +324,7 @@ fun EditCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                         edcm.selectedChar?.charClass = characterClass ?: ""
                         edcm.selectedChar?.charAlignment = characterAlignment ?: ""
                         mmvm.editCharacter(edcm.selectedChar ?: CharacterEntry())
-                    }) { Text(text = "Save") }
+                    }) { Text(text = stringResource(R.string.save_button)) }
                 }
             }
         }
@@ -293,11 +333,45 @@ fun EditCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                 showAlertDialog = true
             },
             containerColor = MaterialTheme.colorScheme.errorContainer,
-            modifier = Modifier.align(Alignment.BottomEnd).padding(8.dp)
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(8.dp)
         )
         {
             Icon(
-                imageVector = Icons.Filled.Clear, contentDescription = "",
+                imageVector = Icons.Filled.Delete, contentDescription = "",
+                tint = MaterialTheme.colorScheme.onErrorContainer
+            )
+        }
+        FloatingActionButton(
+            onClick = {
+                when (PackageManager.PERMISSION_GRANTED) {
+                    ContextCompat.checkSelfPermission(
+                        context,
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) -> {
+                        //This is a sad attempt at requesting permissions
+                    }
+                    else -> {
+                        launcher2.launch(
+                            android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+                        launcher2.launch(
+                            android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+                        )
+                    }
+                }
+                launcher.launch(PickVisualMediaRequest(
+                    ActivityResultContracts.PickVisualMedia.ImageOnly))
+            },
+            containerColor = MaterialTheme.colorScheme.errorContainer,
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(8.dp)
+        )
+        {
+            Icon(
+                imageVector = Icons.Filled.Face, contentDescription = "",
                 tint = MaterialTheme.colorScheme.onErrorContainer
             )
         }
@@ -308,40 +382,45 @@ fun EditCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
 fun EditItems(modifier: Modifier = Modifier,
               edcm: EditViewModel
 ) {
-    val myFlow = edcm.itemFlowList.collectAsState(listOf())
-    Column(modifier.fillMaxWidth()) {
-        LazyColumn() {
-            items(myFlow.value.size) { item ->
-                ItemCard(Modifier.padding(4.dp), edcm, myFlow.value[item])
+    val myFlow = edcm.itemFlowList.collectAsState(listOf()).value
+    Box(modifier.fillMaxWidth()) {
+        LazyColumn(contentPadding = PaddingValues(bottom = 50.dp)) {
+            items(myFlow.size) { item ->
+                ItemCard(Modifier.padding(4.dp), edcm, myFlow[item])
             }
         }
-        IconButton(modifier = Modifier.align(Alignment.End),
+        IconButton(modifier = Modifier.align(Alignment.BottomEnd),
             onClick = {
                 edcm.addItem(Item(charId = edcm.selectedChar?.id ?: 0))
             }
         ) { Icon(imageVector = Icons.Filled.Add,
-            contentDescription = "Add blank item")}
+            contentDescription = stringResource(R.string.add_blank_item_button_desc)
+        )}
     }
 }
 
 @Composable
 fun EditSpells(modifier: Modifier = Modifier,
                edcm: EditViewModel) {
-    val myFlow = edcm.spellFlowList.collectAsState(listOf())
-    Column(modifier) {
-        Button(onClick = {
-            edcm.addSpell(Spell(charId = edcm.selectedChar?.id ?: 0))
-        }) { Text(text = "Add blank item")}
-        LazyColumn {
-            items(myFlow.value.size) { spell ->
-                SpellCard(Modifier.padding(4.dp), edcm, myFlow.value[spell])
+    val myFlow = edcm.spellFlowList.collectAsState(listOf()).value
+    Box(modifier.fillMaxWidth()) {
+        LazyColumn(contentPadding = PaddingValues(bottom = 50.dp)) {
+            items(myFlow.size) { spell ->
+                SpellCard(Modifier.padding(4.dp), edcm, myFlow[spell])
             }
         }
+        IconButton(modifier = Modifier.align(Alignment.BottomEnd),
+            onClick = {
+                edcm.addSpell(Spell(charId = edcm.selectedChar?.id ?: 0))
+            }
+        ) { Icon(imageVector = Icons.Filled.Add,
+            contentDescription = stringResource(R.string.add_blank_spell_button_desc)
+        )}
     }
 }
 
 @Composable
-fun RemoveCharacterDialog(
+fun RemovalDialog(
     onDismissRequest: () -> Unit,
     onConfirmation: () -> Unit,
     dialogTitle: String,
@@ -349,35 +428,19 @@ fun RemoveCharacterDialog(
     icon: ImageVector,
 ) {
     AlertDialog(
-        icon = {
-            Icon(icon, contentDescription = "Example Icon")
-        },
-        title = {
-            Text(text = dialogTitle)
-        },
-        text = {
-            Text(text = dialogText)
-        },
-        onDismissRequest = {
-            onDismissRequest()
-        },
+        icon = { Icon(icon,
+            contentDescription = stringResource(R.string.removal_dialog_icon_desc)) },
+        title = { Text(text = dialogTitle) },
+        text = { Text(text = dialogText,
+                textAlign = TextAlign.Center) },
+        onDismissRequest = { onDismissRequest() },
         confirmButton = {
-            TextButton(
-                onClick = {
-                    onConfirmation()
-                }
-            ) {
-                Text("Confirm")
-            }
+            TextButton(onClick = { onConfirmation() }
+            ) { Text(stringResource(R.string.confirm_button_text)) }
         },
         dismissButton = {
-            TextButton(
-                onClick = {
-                    onDismissRequest()
-                }
-            ) {
-                Text("Dismiss")
-            }
+            TextButton(onClick = { onDismissRequest() }
+            ) { Text(stringResource(R.string.dismiss_button_text)) }
         }
     )
 }

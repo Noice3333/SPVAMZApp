@@ -1,6 +1,5 @@
 package com.example.spvamzapp.mainMenu
 
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -17,7 +16,6 @@ class UserPrefRepo(
     val chosenTheme: Flow<Int> = dataStore.data
         .catch {
             if (it is IOException) {
-                Log.e(TAG, "Error reading preferences", it)
                 emit(emptyPreferences())
             } else {
                 throw it
@@ -29,7 +27,6 @@ class UserPrefRepo(
 
     private companion object {
         val THEME = intPreferencesKey("theme")
-        const val TAG = "UserPrefRepo"
     }
 
     suspend fun saveThemePreference(themeChoice: Int) {

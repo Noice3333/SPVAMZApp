@@ -4,8 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.spvamzapp.R
 
-@Database(entities = [CharacterEntry::class], version = 2, exportSchema = false)
+@Database(entities = [CharacterEntry::class], version = 3, exportSchema = false)
 abstract class CharacterDatabase: RoomDatabase() {
     abstract fun characterDao(): CharacterDao
 
@@ -14,7 +15,8 @@ abstract class CharacterDatabase: RoomDatabase() {
         private var Instance: CharacterDatabase? = null
         fun getDatabase(context: Context): CharacterDatabase {
             return Instance ?: synchronized(this) {
-                Room.databaseBuilder(context, CharacterDatabase::class.java, "character_database")
+                Room.databaseBuilder(context, CharacterDatabase::class.java,
+                    context.getString(R.string.character_database_name))
                     .fallbackToDestructiveMigration(true).build().also { Instance = it }
             }
         }

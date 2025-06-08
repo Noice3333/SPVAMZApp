@@ -3,10 +3,84 @@
     <string name="username">Samuel Panák</string>
     <string name="roll">Roll</string>
     <string name="what_you_entered">What you entered:</string>
-    <string name="edit">Edit</string>
+    <string name="details">Details</string>
+    <string name="nullString">null</string>
+    <string name="character_image_content_desc">Character image</string>
+    <string name="character_database_name">character_database</string>
+    <string name="item_database_name">item_database</string>
+    <string name="delete_dialog_title">Delete</string>
+    <string name="item_deletion_prompt">Are you sure you want to remove this item?</string>
+    <string name="edit_item_name_button_desc">Edit item name</string>
+    <string name="edit_item_description_button_desc">Edit item description</string>
+    <string name="delete_item_button_desc">Delete item</string>
+    <string name="spell_deletion_prompt">Are you sure you want to remove this spell?</string>
+    <string name="edit_spell_name_button_desc">Edit spell name</string>
+    <string name="edit_spell_description_button_desc">Edit spell description</string>
+    <string name="delete_spell_button_desc">Delete spell</string>
+    <string name="spell_database_name">spell_database</string>
+    <string name="character_sheet_screen_title">Character sheet</string>
+    <string name="back_button_desc">Return to main menu</string>
+    <string name="toggle_editing_button_desc">Toggle editing</string>
+    <string name="character_details_navbar_desc">Character details</string>
+    <string name="item_details_navbar_desc">Item details</string>
+    <string name="spell_details_navbar_desc">Spell details</string>
+    <string name="character_deletion_prompt">Are you sure you want to delete this character?</string>
+    <string name="name_colon">Name:</string>
+    <string name="race_colon">Race:</string>
+    <string name="class_colon">Class:</string>
+    <string name="alignment_colon">Alignment:</string>
+    <string name="save_button">Save</string>
+    <string name="add_blank_item_button_desc">Add blank item</string>
+    <string name="add_blank_spell_button_desc">Add blank spell</string>
+    <string name="removal_dialog_icon_desc">Removal dialog icon</string>
+    <string name="confirm_button_text">Confirm</string>
+    <string name="dismiss_button_text">Dismiss</string>
+    <string name="create_character_screen_title">Create character</string>
+    <string name="character_name_dummy">Character name:</string>
+    <string name="race_selection">Race...</string>
+    <string name="expand_race_menu_button_desc">Expand race menu</string>
+    <string name="class_selection">Class...</string>
+    <string name="expand_class_menu_desc">Expand class menu</string>
+    <string name="alignment_selection">Alignment...</string>
+    <string name="expand_alignment_menu_desc">Expand alignment menu</string>
+    <string name="create_button_text">Create</string>
+    <string name="theme_menu_desc">Theme menu</string>
+    <string name="theme_blue">Theme: Blue</string>
+    <string name="theme_red">Theme: Red</string>
+    <string name="theme_green">Theme: Green</string>
+    <string name="create_new_character_button_desc">Create new character</string>
+    <string name="dice_roll_dialog_desc">Dice roll dialog</string>
+    <string name="dice_roll">Dice roll</string>
+    <string name="dice_roll_subtext">Result will be between these numbers:</string>
+    <string name="roll_button_text">Roll</string>
     <string-array name="characterRaces">
         <item>Aaracokra</item>
         <item>Aasimar</item>
         <item>Battleforged</item>
+    </string-array>
+    <string-array name="characterClasses">
+        <item>Barbarian</item>
+        <item>Bard</item>
+        <item>Cleric</item>
+        <item>Druid</item>
+        <item>Fighter</item>
+        <item>Monk</item>
+        <item>Paladin</item>
+        <item>Ranger</item>
+        <item>Rogue</item>
+        <item>Sorcerer</item>
+        <item>Warlock</item>
+        <item>Wizard</item>
+    </string-array>
+    <string-array name="characterAlignments">
+        <item>Lawful Good</item>
+        <item>Lawful Neutral</item>
+        <item>Lawful Evil</item>
+        <item>Neutral Good</item>
+        <item>True Neutral</item>
+        <item>Neutral Evil</item>
+        <item>Chaotic Good</item>
+        <item>Chaotic Neutral</item>
+        <item>Chaotic Evil</item>
     </string-array>
 </resources>
