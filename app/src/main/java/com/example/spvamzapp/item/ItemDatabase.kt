@@ -1,13 +1,12 @@
-package com.example.spvamzapp.character
+package com.example.spvamzapp.item
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.spvamzapp.R
-import com.example.spvamzapp.item.Item
-import com.example.spvamzapp.item.ItemDao
 
+//Databáza položiek
 @Database(entities = [Item::class], version = 1, exportSchema = false)
 abstract class ItemDatabase: RoomDatabase() {
     abstract fun itemDao(): ItemDao

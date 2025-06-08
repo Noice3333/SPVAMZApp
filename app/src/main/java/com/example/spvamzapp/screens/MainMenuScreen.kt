@@ -56,7 +56,7 @@ import com.example.spvamzapp.viewmodels.EditViewModel
 import com.example.spvamzapp.viewmodels.MainMenuViewModel
 import kotlin.random.Random
 
-
+//Hlavná obrazovka, na ktorej sa ocitne používaťeľ po otvorení aplikácie
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainMenuScreen(
@@ -75,10 +75,10 @@ fun MainMenuScreen(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary
                 ),
-                title = { Text("Main menu") },
+                title = { Text(stringResource(R.string.main_menu_title)) },
                 scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
                 navigationIcon = {
-                    Box() {
+                    Box {
                         IconButton(onClick = {menuExpanded = true}) {
                             Icon(imageVector = Icons.Filled.Menu, contentDescription = stringResource(
                                 R.string.theme_menu_desc
@@ -111,6 +111,7 @@ fun MainMenuScreen(
         MainMenu(Modifier.padding(innerPadding), state.charList, onEditButtonClicked, edcm, mmvm) }
 }
 
+//Obsah hlavného menu - zobrazuje zoznam postáv
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainMenu(modifier: Modifier = Modifier, list: List<CharacterEntry>,
@@ -119,7 +120,6 @@ fun MainMenu(modifier: Modifier = Modifier, list: List<CharacterEntry>,
 ) {
     val layoutDirection = LocalLayoutDirection.current
     var diceRoll by rememberSaveable { mutableStateOf(false) }
-
 
     Surface(modifier = modifier
         .fillMaxSize()
@@ -152,6 +152,7 @@ fun MainMenu(modifier: Modifier = Modifier, list: List<CharacterEntry>,
     }
 }
 
+//Dialógové okno na "hod kockou"
 @Composable
 fun DiceRollDialog(
     onDismissRequest: () -> Unit,
@@ -168,7 +169,7 @@ fun DiceRollDialog(
             dismissOnClickOutside = true
         )
     ) {
-        Box() {
+        Box {
             Card(Modifier
                 .height(300.dp)
                 .width(200.dp)
@@ -214,20 +215,14 @@ fun DiceRollDialog(
                         .align(Alignment.CenterHorizontally)
                         .weight(1f))
                     TextButton(onClick = {
-                        if (lowerBoundInt == null)
-                            lowerBoundCorrect = false
-                        else
-                            lowerBoundCorrect = true
-                        if (lowerBoundInt == null)
-                            lowerBoundCorrect = false
-                        else
-                            lowerBoundCorrect = true
+                        lowerBoundCorrect = lowerBoundInt == null
+                        lowerBoundCorrect = lowerBoundInt == null
                         if (lowerBoundInt != null && upperBoundInt != null) {
-                            if (lowerBoundInt <= upperBoundInt)
-                                result = Random.nextInt(lowerBoundInt, upperBoundInt + 1)
+                            result = if (lowerBoundInt <= upperBoundInt)
+                                Random.nextInt(lowerBoundInt, upperBoundInt + 1)
                                     .toString()
                             else
-                                result = Random.nextInt(upperBoundInt, lowerBoundInt + 1)
+                                Random.nextInt(upperBoundInt, lowerBoundInt + 1)
                                     .toString()
                         }
                     }) { Text(stringResource(R.string.roll_button_text)) }

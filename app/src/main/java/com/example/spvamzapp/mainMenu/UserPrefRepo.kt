@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
+//Vytvorené podľa online android developer zdrojov
 class UserPrefRepo(
     private val dataStore: DataStore<Preferences>
 ) {

@@ -26,6 +26,7 @@ import com.example.spvamzapp.R
 import com.example.spvamzapp.screens.RemovalDialog
 import com.example.spvamzapp.viewmodels.EditViewModel
 
+//Karta ukazujúca kúzlo, ktorým disponuje nejaká postava
 @Composable
 fun SpellCard(modifier: Modifier = Modifier,
               edcm: EditViewModel,
@@ -49,8 +50,8 @@ fun SpellCard(modifier: Modifier = Modifier,
     Card(modifier
         .fillMaxWidth()
         .heightIn(100.dp)) {
-        Column() {
-            Row() {
+        Column {
+            Row {
                 TextField(
                     modifier = Modifier
                         .weight(0.9f)
@@ -78,7 +79,7 @@ fun SpellCard(modifier: Modifier = Modifier,
                     )
                 }
             }
-            Row() {
+            Row {
                 TextField(
                     modifier = Modifier
                         .weight(0.9f)

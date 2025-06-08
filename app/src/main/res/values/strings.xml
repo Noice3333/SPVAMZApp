@@ -37,11 +37,11 @@
     <string name="dismiss_button_text">Dismiss</string>
     <string name="create_character_screen_title">Create character</string>
     <string name="character_name_dummy">Character name:</string>
-    <string name="race_selection">Race...</string>
+    <string name="race_selection">Race…</string>
     <string name="expand_race_menu_button_desc">Expand race menu</string>
-    <string name="class_selection">Class...</string>
+    <string name="class_selection">Class…</string>
     <string name="expand_class_menu_desc">Expand class menu</string>
-    <string name="alignment_selection">Alignment...</string>
+    <string name="alignment_selection">Alignment…</string>
     <string name="expand_alignment_menu_desc">Expand alignment menu</string>
     <string name="create_button_text">Create</string>
     <string name="theme_menu_desc">Theme menu</string>
@@ -53,6 +53,8 @@
     <string name="dice_roll">Dice roll</string>
     <string name="dice_roll_subtext">Result will be between these numbers:</string>
     <string name="roll_button_text">Roll</string>
+    <string name="custom_switch_text">Custom</string>
+    <string name="main_menu_title">Main menu</string>
     <string-array name="characterRaces">
         <item>Aaracokra</item>
         <item>Aasimar</item>

@@ -69,6 +69,7 @@ import com.example.spvamzapp.spell.SpellCard
 import com.example.spvamzapp.viewmodels.EditViewModel
 import com.example.spvamzapp.viewmodels.MainMenuViewModel
 
+//Obrazovka, na ktorej sa dajú pozrieť alebo upraviť detailnejšie informácie o postave
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CharacterSheetScreen(
@@ -182,6 +183,7 @@ fun CharacterSheetScreen(
         }
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -335,14 +337,11 @@ fun EditCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
             containerColor = MaterialTheme.colorScheme.errorContainer,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(8.dp)
-        )
-        {
-            Icon(
+                .padding(8.dp))
+        {  Icon(
                 imageVector = Icons.Filled.Delete, contentDescription = "",
                 tint = MaterialTheme.colorScheme.onErrorContainer
-            )
-        }
+            ) }
         FloatingActionButton(
             onClick = {
                 when (PackageManager.PERMISSION_GRANTED) {
@@ -350,7 +349,7 @@ fun EditCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                         context,
                         android.Manifest.permission.READ_EXTERNAL_STORAGE
                     ) -> {
-                        //This is a sad attempt at requesting permissions
+                        //Smutný pokus
                     }
                     else -> {
                         launcher2.launch(
@@ -419,6 +418,7 @@ fun EditSpells(modifier: Modifier = Modifier,
     }
 }
 
+//Všeobecné dialógové okno na odstraňovanie niečoho, z android developer dialog component detailoej stránky
 @Composable
 fun RemovalDialog(
     onDismissRequest: () -> Unit,

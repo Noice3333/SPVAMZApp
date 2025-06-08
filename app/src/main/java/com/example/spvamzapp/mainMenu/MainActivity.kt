@@ -11,8 +11,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.spvamzapp.character.CharacterDatabase
 import com.example.spvamzapp.character.CharacterRepository
-import com.example.spvamzapp.character.ItemDatabase
-import com.example.spvamzapp.character.ItemRepository
+import com.example.spvamzapp.item.ItemDatabase
+import com.example.spvamzapp.item.ItemRepository
 import com.example.spvamzapp.screens.CharacterSheetScreen
 import com.example.spvamzapp.screens.CreateCharacterScreen
 import com.example.spvamzapp.screens.MainMenuScreen
@@ -30,8 +30,8 @@ enum class ScreenNames() {
     EditCharacterScreen
 }
 
+//Hlavná aktivita, tu sa rozbiehajú repozitáre a vytvára navigácia a hlavné menu
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

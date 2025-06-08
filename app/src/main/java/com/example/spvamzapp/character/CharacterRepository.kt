@@ -2,6 +2,7 @@ package com.example.spvamzapp.character
 
 import kotlinx.coroutines.flow.Flow
 
+//Repozitár na postavy
 class CharacterRepository(private val characterDao: CharacterDao) {
     val allCharacters: Flow<List<CharacterEntry>> = characterDao.getAllCharacters()
 

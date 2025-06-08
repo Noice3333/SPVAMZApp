@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.spvamzapp.character.CharacterEntry
-import com.example.spvamzapp.character.ItemRepository
+import com.example.spvamzapp.item.ItemRepository
 import com.example.spvamzapp.item.Item
 import com.example.spvamzapp.spell.Spell
 import com.example.spvamzapp.spell.SpellRepository
@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
+//ViewModel, ktorý udržiava informácie o položkách a kúzlach postáv a pomáha interagovať
+//s repozitármi, kde sú uložené pri úprave postavy
 class EditViewModel(
     private val itemRepository: ItemRepository,
     private val spellRepository: SpellRepository

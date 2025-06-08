@@ -36,6 +36,7 @@ import com.example.spvamzapp.R
 import com.example.spvamzapp.character.CharacterEntry
 import com.example.spvamzapp.viewmodels.MainMenuViewModel
 
+//Obrazovka, na ktorej sa dá vytvoriť nová postava
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateCharacterScreen(
@@ -61,9 +62,10 @@ fun CreateCharacterScreen(
                 }
             )
         }
-    ) { innerPadding -> CreateCharacter(Modifier.padding(innerPadding), mmvm, {onBackButtonClicked()}) }
+    ) { innerPadding -> CreateCharacter(Modifier.padding(innerPadding), mmvm) { onBackButtonClicked() } }
 }
 
+//Obsah obrazovky, stará so o vytvorenie novej postavy
 @Composable
 fun CreateCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                     onCancelButtonClick: () -> Unit) {
@@ -114,9 +116,10 @@ fun CreateCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                Text("Custom", Modifier
-                    .align(Alignment.CenterVertically)
-                    .padding(8.dp))
+                Text(
+                    stringResource(R.string.custom_switch_text), Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(8.dp))
                 Switch(modifier = Modifier.align(Alignment.CenterVertically),
                     checked = characterRaceSwitch,
                     onCheckedChange = { characterRaceSwitch = it })
@@ -147,7 +150,8 @@ fun CreateCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                Text("Custom", Modifier
+                Text(
+                    stringResource(R.string.custom_switch_text), Modifier
                     .align(Alignment.CenterVertically)
                     .padding(8.dp))
                 Switch(modifier = Modifier.align(Alignment.CenterVertically),
@@ -180,7 +184,8 @@ fun CreateCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                Text("Custom", Modifier
+                Text(
+                    stringResource(R.string.custom_switch_text), Modifier
                     .align(Alignment.CenterVertically)
                     .padding(8.dp))
                 Switch(modifier = Modifier.align(Alignment.CenterVertically),

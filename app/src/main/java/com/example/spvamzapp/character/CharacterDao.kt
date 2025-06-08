@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
+//Dao pre interakciu s repozitárom postáv
 @Dao
 interface CharacterDao{
     @Insert(onConflict = OnConflictStrategy.IGNORE)

@@ -3,7 +3,8 @@ package com.example.spvamzapp.spell
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-//stringResource is unusable outside of a composable
+//Jedno kúzlo postavy
+//stringResource sa nedá použiť
 @Entity(tableName = "spells")
 data class Spell(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,

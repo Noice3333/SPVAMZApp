@@ -1,9 +1,8 @@
-package com.example.spvamzapp.character
+package com.example.spvamzapp.item
 
-import com.example.spvamzapp.item.Item
-import com.example.spvamzapp.item.ItemDao
 import kotlinx.coroutines.flow.Flow
 
+//Repozitár položiek
 class ItemRepository(private val itemDao: ItemDao) {
     val allItems: Flow<List<Item>> = itemDao.getAllItems()
 

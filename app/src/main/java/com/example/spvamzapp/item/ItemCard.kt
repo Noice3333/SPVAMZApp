@@ -26,6 +26,7 @@ import com.example.spvamzapp.R
 import com.example.spvamzapp.screens.RemovalDialog
 import com.example.spvamzapp.viewmodels.EditViewModel
 
+//Karta zobrazujúca názov a opis položky postavy
 @Composable
 fun ItemCard(modifier: Modifier = Modifier,
              edcm: EditViewModel,
@@ -49,8 +50,8 @@ fun ItemCard(modifier: Modifier = Modifier,
     Card(modifier
         .fillMaxWidth()
         .heightIn(100.dp)) {
-        Column() {
-            Row() {
+        Column {
+            Row {
                 TextField(
                     modifier = Modifier
                         .weight(0.9f)
@@ -78,7 +79,7 @@ fun ItemCard(modifier: Modifier = Modifier,
                     )
                 }
             }
-            Row() {
+            Row {
                 TextField(
                     modifier = Modifier
                         .weight(0.9f)

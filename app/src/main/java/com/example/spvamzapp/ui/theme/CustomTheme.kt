@@ -251,6 +251,7 @@ val unspecified_scheme = ColorFamily(
     Color.Unspecified, Color.Unspecified, Color.Unspecified, Color.Unspecified
 )
 
+//Kód čiastočne vygenerovaný material design stránkou, ktorý drží jednotlivé farebné predlohy
 @Composable
 fun AppTheme(
     choice: Int,

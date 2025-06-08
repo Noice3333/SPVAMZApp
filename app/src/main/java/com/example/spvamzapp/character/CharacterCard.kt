@@ -32,6 +32,7 @@ import com.example.spvamzapp.R
 import com.example.spvamzapp.viewmodels.EditViewModel
 import com.example.spvamzapp.viewmodels.MainMenuViewModel
 
+//Karta, ktorá zobrazuje zhrnutie informácii o postave
 @Composable
 fun CharacterCard(modifier: Modifier = Modifier,
                   character: CharacterEntry,
@@ -80,6 +81,8 @@ fun CharacterCard(modifier: Modifier = Modifier,
     }
 }
 
+//Táto funkcia zobrazuje obrázok, ktorý prislúcha postave podľa jednej z jej charakteristík
+//alebo obrázok, ktorý si používateľ zvolí neskôr
 @Composable
 fun CharacterImage(character: CharacterEntry, alpha: Float) {
     var chClass by remember { mutableStateOf(character.charClass) }

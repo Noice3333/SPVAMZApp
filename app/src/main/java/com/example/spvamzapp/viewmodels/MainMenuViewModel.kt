@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+//ViewModel, ktorý poskytuje možnosť hlavnému menu prispôsobovať sa na zmeny preferencii
+// používateľa,
+// a určitým obrazovkám upravovať, vytvárať alebo odstraňovať postavy
 class MainMenuViewModel(private val repository: CharacterRepository,
     private val userPrefRepo: UserPrefRepo) : ViewModel() {
 

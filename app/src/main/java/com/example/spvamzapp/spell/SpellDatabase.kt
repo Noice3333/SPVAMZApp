@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.spvamzapp.R
 
+//Databáza kúziel
 @Database(entities = [Spell::class], version = 1, exportSchema = false)
 abstract class SpellDatabase: RoomDatabase() {
     abstract fun spellDao(): SpellDao

@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.spvamzapp.R
 
+//Databáza postáv
 @Database(entities = [CharacterEntry::class], version = 3, exportSchema = false)
 abstract class CharacterDatabase: RoomDatabase() {
     abstract fun characterDao(): CharacterDao

@@ -3,7 +3,8 @@ package com.example.spvamzapp.character
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-//stringResource is unusable outside of a composable
+//Dátová trieda predstavujúca postavu
+//stringResource sa nedá použiť
 @Entity(tableName = "characterEntries")
 data class CharacterEntry(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
