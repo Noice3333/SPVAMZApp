@@ -179,7 +179,7 @@ fun DiceRollDialog(
                         .align(
                             Alignment.CenterHorizontally
                         )
-                        .padding(4.dp), style = MaterialTheme.typography.headlineSmall)
+                        .padding(8.dp), style = MaterialTheme.typography.headlineSmall)
                     Text(text = stringResource(R.string.dice_roll_subtext),
                         modifier = Modifier
                             .align(
@@ -189,7 +189,7 @@ fun DiceRollDialog(
                         style = MaterialTheme.typography.bodyMedium)
                     Row(Modifier.weight(2f)) {
                         TextField(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.weight(1f).padding(4.dp),
                             value = lowerBound.toString(),
                             onValueChange = { lowerBound = it },
                             singleLine = true,
@@ -199,7 +199,7 @@ fun DiceRollDialog(
                             isError = !lowerBoundCorrect
                         )
                         TextField(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.weight(1f).padding(4.dp),
                             value = upperBound.toString(),
                             onValueChange = { upperBound = it },
                             singleLine = true,
@@ -215,8 +215,8 @@ fun DiceRollDialog(
                         .align(Alignment.CenterHorizontally)
                         .weight(1f))
                     TextButton(onClick = {
-                        lowerBoundCorrect = lowerBoundInt == null
-                        lowerBoundCorrect = lowerBoundInt == null
+                        lowerBoundCorrect = lowerBoundInt != null
+                        upperBoundCorrect = upperBoundInt != null
                         if (lowerBoundInt != null && upperBoundInt != null) {
                             result = if (lowerBoundInt <= upperBoundInt)
                                 Random.nextInt(lowerBoundInt, upperBoundInt + 1)
@@ -225,7 +225,9 @@ fun DiceRollDialog(
                                 Random.nextInt(upperBoundInt, lowerBoundInt + 1)
                                     .toString()
                         }
-                    }) { Text(stringResource(R.string.roll_button_text)) }
+                    },
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                ) { Text(stringResource(R.string.roll_button_text)) }
                 }
             }
         }
