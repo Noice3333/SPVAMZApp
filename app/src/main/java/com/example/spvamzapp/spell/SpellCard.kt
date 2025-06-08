@@ -104,7 +104,7 @@ fun SpellCard(modifier: Modifier = Modifier,
                         tint = MaterialTheme.colorScheme.onSecondaryContainer)
                 }
             }
-            if (textFieldEditable == 2) {
+            if (textFieldEditable == 1) {
                 IconButton(onClick = {showRemoveDialog = true
                     textFieldEditable = 0}) {
                     Icon(

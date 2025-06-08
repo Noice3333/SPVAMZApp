@@ -40,7 +40,7 @@ fun CharacterCard(modifier: Modifier = Modifier,
                   edcm: EditViewModel,
                   mmvm: MainMenuViewModel
 ) {
-    Card(modifier = modifier.heightIn(50.dp, 100.dp)) {
+    Card(modifier = modifier.heightIn(50.dp, 150.dp)) {
         Box {
             CharacterImage(character, 0.5f)
             Column {
@@ -50,7 +50,7 @@ fun CharacterCard(modifier: Modifier = Modifier,
                         modifier = Modifier
                             .padding(16.dp)
                             .weight(0.9f),
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.headlineMedium,
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1
                     )
@@ -65,14 +65,14 @@ fun CharacterCard(modifier: Modifier = Modifier,
                 Text(
                     text = character.charRace,
                     modifier = Modifier.padding(start = 16.dp),
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodyLarge,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
                 Text(
                     text = character.charClass,
                     modifier = Modifier.padding(start = 16.dp),
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodyLarge,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )

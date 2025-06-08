@@ -61,12 +61,12 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(ScreenNames.CreateCharacterScreen.name) {
                         CreateCharacterScreen(viewModel) {
-                            navController.navigate(ScreenNames.MainMenuScreen.name)
+                            navController.popBackStack(ScreenNames.MainMenuScreen.name, false)
                         }
                     }
                     composable(ScreenNames.EditCharacterScreen.name) {
                         CharacterSheetScreen(viewModel, editViewModel) {
-                            navController.navigate(ScreenNames.MainMenuScreen.name)
+                            navController.popBackStack(ScreenNames.MainMenuScreen.name, false)
                         }
                     }
                 }

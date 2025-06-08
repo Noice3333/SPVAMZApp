@@ -17,8 +17,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
@@ -141,10 +141,10 @@ fun MainMenu(modifier: Modifier = Modifier, list: List<CharacterEntry>,
                     )
                 }
             }
-            FloatingActionButton(modifier = Modifier.align(Alignment.BottomStart),
+            FloatingActionButton(modifier = Modifier.align(Alignment.BottomStart).padding(4.dp),
                 onClick = { diceRoll = true }) {
                 Icon(
-                    imageVector = Icons.Filled.Star,
+                    imageVector = Icons.Filled.KeyboardArrowUp,
                     contentDescription = stringResource(R.string.dice_roll_dialog_desc)
                 )
             }

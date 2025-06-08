@@ -339,7 +339,8 @@ fun EditCharacter(modifier: Modifier = Modifier, mmvm: MainMenuViewModel,
                 .align(Alignment.BottomEnd)
                 .padding(8.dp))
         {  Icon(
-                imageVector = Icons.Filled.Delete, contentDescription = "",
+                imageVector = Icons.Filled.Delete,
+            contentDescription = stringResource(R.string.delete_character_button_desc),
                 tint = MaterialTheme.colorScheme.onErrorContainer
             ) }
         FloatingActionButton(

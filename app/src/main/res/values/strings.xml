@@ -55,10 +55,22 @@
     <string name="roll_button_text">Roll</string>
     <string name="custom_switch_text">Custom</string>
     <string name="main_menu_title">Main menu</string>
+    <string name="delete_character_button_desc">Delete character</string>
     <string-array name="characterRaces">
         <item>Aaracokra</item>
         <item>Aasimar</item>
         <item>Battleforged</item>
+        <item>Dragonborn</item>
+        <item>Dwarf</item>
+        <item>Elf</item>
+        <item>Gnome</item>
+        <item>Goliath</item>
+        <item>Halfling</item>
+        <item>Half-Elf</item>
+        <item>Half-Orc</item>
+        <item>Human</item>
+        <item>Orc</item>
+        <item>Tiefling</item>
     </string-array>
     <string-array name="characterClasses">
         <item>Barbarian</item>
